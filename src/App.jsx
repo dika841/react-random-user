@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [data, setData] = useState([]);
@@ -7,8 +7,14 @@ function App() {
       .then((res) => res.json())
       .then((res) => setData(res.results));
   };
+
+  useEffect(() => {
+    user();
+  }, []);
+
   const getUser = data.map((el) => ({
     name: el.name.first,
+    email: el.email,
     img: el.picture.large,
     age: el.dob.age,
   }));
@@ -21,6 +27,7 @@ function App() {
             <div key={i} className="flex flex-col items-center gap-y-3">
               <img className="rounded-full  " src={el.img} />
               <h1 className="font-bold text-2xl">Name : {el.name}</h1>
+              <h1 className="font-bold text-xl"> {el.email}</h1>
               <h2 className="font-bold text-xl">Age : {el.age}</h2>
             </div>
           ))}
